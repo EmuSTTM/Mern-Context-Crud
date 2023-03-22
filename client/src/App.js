@@ -1,16 +1,18 @@
-import { PostForm, HomePage, NotFoundPage } from './pages'
-import { Routes, Route } from 'react-router-dom';
-import { PostContainer} from './context/postContext';
+import { PostForm, HomePage, NotFoundPage } from "./pages";
+import { Routes, Route } from "react-router-dom";
+import { PostProvider } from "./context/postContext";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <PostContainer>
+    <PostProvider>
       <Routes>
-      <Route path='/' element={<HomePage/>} />
-      <Route path='/new' element={<PostForm/>} />
-      <Route path='/*' element={<NotFoundPage/>} />
-    </Routes>
-    </PostContainer>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/new" element={<PostForm />} />
+        <Route path="/*" element={<NotFoundPage />} />
+      </Routes>
+      <Toaster />
+    </PostProvider>
   );
 }
 

@@ -5,20 +5,21 @@ const fs = require("fs-extra");
 
 
 exports.getPosts = async (req, res, next) => {
-  const posts = await Post.find();
-  res.send([posts]);
+  try {
+    const posts = await Post.find({});
+    return res.json(posts);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 exports.createPost = async (req, res, next) => {
   const { title, description } = req.body;
 
-  
-
-
   if (title && description) {
     const post = new Post({ title, description });
-    if(req.files.image) {
-      await uploadImage(req.files.image.tempFilePath)
+    if(req.files?.image) {
+      const result = await uploadImage(req.files.image.tempFilePath)
       post.image = {
         url : result.secure_url,
         public_id : result.public_id
@@ -38,7 +39,7 @@ exports.updatePost = async (req, res, next) => {
   if (title && description) {
     const post = new Post({ title, description, _id: req.params.id});
     if(req.files.image) {
-      await uploadImage(req.files.image.tempFilePath)
+      const result = await uploadImage(req.files.image.tempFilePath)
       post.image = {
         url : result.secure_url,
         public_id : result.public_id
