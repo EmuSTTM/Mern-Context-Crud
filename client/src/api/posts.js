@@ -9,3 +9,8 @@ export const createPostRequest = async (post) => {
   const response = await axios.post("/posts", post);
   return response.data;
 };
+
+export const deletePostRequest = async (id) => {
+  const response = await axios.delete(`/posts/${id}`);
+  return response;
+};

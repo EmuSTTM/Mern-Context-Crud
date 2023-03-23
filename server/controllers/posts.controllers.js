@@ -55,14 +55,18 @@ exports.updatePost = async (req, res, next) => {
 };
 
 exports.deletePost = async (req, res, next) => {
-  const postRemoved = await Post.findByIdAndDelete(req.params.id);
-  
-  
-  if (!postRemoved) return res.sendStatus(404);
-  if (postRemoved.image){
-    await deleteImage(postRemoved.image.public_id)
+  try{
+    const postRemoved = await Post.findByIdAndDelete(req.params.id);
+    if (postRemoved && postRemoved.image.public_id){
+      await deleteImage(postRemoved.image.public_id)
+    }
+    if(!postRemoved) return res.sendStatus(404);
+    res.sendStatus(204);
+    
+  } catch (error) {
+    return res.status(500).json({message: error.message});
   }
-  return res.send('deleted');
+  
 };
 
 exports.getPost = async (req, res, next) => {
