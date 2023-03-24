@@ -5,10 +5,29 @@ export const getPostsRequest = async () => {
   return response.data;
 };
 
+
+
+
 export const createPostRequest = async (post) => {
-  const response = await axios.post("/posts", post);
+  const form = new FormData();
+
+  // Necesitamos enviar la información como si 
+  // fuese un formulario en lugar de un objeto JSON
+  for(let key in post) {
+    form.append(key, post[key])
+  }
+
+  const response = await axios.post("/posts", form, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    
+  });
   return response.data;
 };
+
+
+
 
 export const deletePostRequest = async (id) => {
   const response = await axios.delete(`/posts/${id}`);
@@ -22,6 +41,29 @@ export const getPostRequest = async (id) => {
 };
 
 export const updatePostRequest = async (id, newFields) => {
-  const response = axios.put(`/posts/${id}`, newFields);
+  // const form = new FormData();
+
+  // // Necesitamos enviar la información como si 
+  // // fuese un formulario en lugar de un objeto JSON
+  // for(let key in post) {
+  //   form.append(key, post[key])
+  // }
+
+  // const response = await axios.post("/posts", form, {
+  //   headers: {
+  //     'Content-Type': 'multipart/form-data'
+  //   },
+    
+  // });
+  // return response.data;
+    const form = new FormData();
+    for (let key in newFields) {
+      form.append(key, newFields[key]);
+    }
+    const response = await axios.put(`/posts/${id}`, form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   return response;
 };
