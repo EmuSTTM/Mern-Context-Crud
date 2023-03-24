@@ -5,7 +5,6 @@ import { PostCard } from "../components/PostCard";
 
 export function HomePage() {
   const { posts } = usePosts();
-  console.log(posts);
 
   if (posts.length === 0)
     return (

@@ -38,7 +38,7 @@ exports.updatePost = async (req, res, next) => {
 
   if (title && description) {
     const post = new Post({ title, description, _id: req.params.id});
-    if(req.files.image) {
+    if(req.files?.image) {
       const result = await uploadImage(req.files.image.tempFilePath)
       post.image = {
         url : result.secure_url,

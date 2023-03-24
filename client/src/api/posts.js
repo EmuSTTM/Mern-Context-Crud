@@ -14,3 +14,14 @@ export const deletePostRequest = async (id) => {
   const response = await axios.delete(`/posts/${id}`);
   return response;
 };
+
+
+export const getPostRequest = async (id) => {
+  const response = await axios.get(`/posts/${id}`);
+  return response.data;
+};
+
+export const updatePostRequest = async (id, newFields) => {
+  const response = axios.put(`/posts/${id}`, newFields);
+  return response;
+};
