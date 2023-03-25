@@ -8,4 +8,11 @@ ENV MONGODB_URI=mongodb+srv://emusttm:01Tgeqk91B8Vijiy@ecs.siltcam.mongodb.net/M
 COPY . .
 ENV PORT=4000
 EXPOSE 4000
-RUN npm run build && npm start
+# Install dependencies
+RUN npm install
+
+# Build the app
+RUN npm run build
+
+# Start the app
+CMD [ "npm", "start" ]
