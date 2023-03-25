@@ -14,7 +14,6 @@ const compression = require("compression");
 const app = express();
 connectDb();
 
-
 // Settings & middlewares
 
 app.use(morgan("dev"));
@@ -24,7 +23,7 @@ app.use(cors());
 
 // Con esto hacemos que el front-end esté compilado en el
 // backend
-const buildPath = path.join(__dirname, '..', 'client', 'build');
+const buildPath = path.join(__dirname, "..", "client", "build");
 app.use(express.static(buildPath));
 
 app.use(
@@ -36,11 +35,14 @@ app.use(
 
 app.use(compression());
 
-
 app.set("port", PORT);
 
 // Routes
 app.use("/", router);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+});
 
 // Starting the server
 app.listen(PORT, () => {
