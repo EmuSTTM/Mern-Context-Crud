@@ -18,7 +18,7 @@ export function HomePage() {
         </div>
       );
       return(
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-2 posts-container">
         {posts.map((post) => {
           return <PostCard post={post} key={post._id} />;
         })}
